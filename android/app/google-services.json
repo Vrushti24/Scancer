@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "673706718276-mnhingclrc491cnrj46ptnqce1kmrbe3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.scancer_app",
+            "certificate_hash": "b8a32e8e582deecf1fb33826949672064047d91f"
+          }
+        },
+        {
           "client_id": "673706718276-jg24gkkios7ti2rbuhkomb78eh8oluga.apps.googleusercontent.com",
           "client_type": 3
         }
