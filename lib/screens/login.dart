@@ -66,7 +66,7 @@ class _LoginState extends State<Login> {
                             width: MediaQuery.of(context).size.width * 0.8,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
-                              color: Colors.red,
+                              color: Colors.primaries.first,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

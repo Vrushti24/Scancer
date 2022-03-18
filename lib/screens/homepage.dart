@@ -1,6 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:open_file/open_file.dart';
+import 'package:scancer_app/screens/verify_data.dart';
 import 'package:scancer_app/util/api.dart';
 
 class HomePage extends StatefulWidget {
@@ -50,12 +51,19 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await API.getData();
+          try {
+            await API.getData();
+            log("Data Fetched");
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const VerifyData()));
+          } catch (e) {
+            log(e.toString());
+          }
         },
         child: const Icon(
           Icons.add_a_photo_outlined,
           color: Colors.white,
-          size: 29,
+          size: 30,
         ),
         backgroundColor: Colors.red,
         tooltip: 'Capture Picture',
@@ -65,8 +73,4 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
-}
-
-void viewFile(PlatformFile file) {
-  OpenFile.open(file.path);
 }

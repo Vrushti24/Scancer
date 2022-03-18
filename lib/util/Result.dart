@@ -48,12 +48,12 @@ class Result {
 
   factory Result.fromMap(Map<String, dynamic> map) {
     return Result(
-      date: List<String>.from(map['date']),
-      event: List<String>.from(map['event']),
-      official: List<String>.from(map['official']),
-      org: List<String>.from(map['org']),
-      person: List<String>.from(map['person']),
-      toc: List<String>.from(map['toc']),
+      date: List<String>.from(map['DATE']),
+      event: List<String>.from(map['EVENT']),
+      official: List<String>.from(map['OFFICIAL']),
+      org: List<String>.from(map['ORG']),
+      person: List<String>.from(map['PERSON']),
+      toc: List<String>.from(map['TOC']),
     );
   }
 

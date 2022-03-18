@@ -5,7 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:scancer_app/util/result.dart';
 
 class API {
+  static late Result result;
   static late String url;
+  
   static Future<void> getURL() async {
     http.Response response =
         await http.get(Uri.parse('http://scancerr.herokuapp.com/getURL'));
@@ -28,9 +30,8 @@ class API {
     log("request Sent");
     var responseData = await response.stream.toBytes();
     var jsonResponse = String.fromCharCodes(responseData);
-    Result result = Result.fromMap(json.decode(jsonResponse));
+    result = Result.fromMap(json.decode(jsonResponse));
     log(result.toString());
-    return result;
   }
 
   static Future<String?> pickFile() async {
