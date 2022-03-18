@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scancer_app/provider/google_signin.dart';
+import 'package:scancer_app/screens/finaldata.dart';
 import 'package:scancer_app/screens/homepage.dart';
 import 'package:scancer_app/screens/login.dart';
 import 'package:scancer_app/screens/splash_screen.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) => ChangeNotifierProvider(
+ /* Widget build(BuildContext context) => ChangeNotifierProvider(
       create: (context) => GoogleSignInProvider(context),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -27,4 +28,12 @@ class MyApp extends StatelessWidget {
           '/login': (context) => const Login(),
         },
       ));
+}*/
+
+ Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: finalData(),
+    );
+  }
 }
