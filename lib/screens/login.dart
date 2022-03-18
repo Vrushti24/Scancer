@@ -59,34 +59,36 @@ class _LoginState extends State<Login> {
                           },
                           borderRadius: BorderRadius.circular(30),
                           child: Container(
-                              margin: const EdgeInsets.symmetric(vertical: 10),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 50, vertical: 10),
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: Colors.red,
-                              ),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: const [
-                                    ImageIcon(
-                                      AssetImage("assets/images/logo01.png"),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 50,
+                              vertical: 10,
+                            ),
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.red,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: const [
+                                ImageIcon(
+                                  AssetImage("assets/images/logo01.png"),
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                                Center(
+                                  child: Text(
+                                    'Login with Google',
+                                    style: TextStyle(
                                       color: Colors.white,
-                                      size: 30,
+                                      fontFamily: 'Andika',
+                                      fontSize: 15,
                                     ),
-                                    Center(
-                                      child: Text(
-                                        'Login with Google',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Andika',
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                    ),
-                                  ])),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
