@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:scancer_app/provider/google_signin.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -18,7 +17,7 @@ class _ProfileState extends State<Profile> {
         children: <Widget>[
           if (name != null)
             Text(name,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                 )),
         ],
