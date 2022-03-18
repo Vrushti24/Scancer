@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:scancer_app/screens/bottomnavbar.dart';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:open_file/open_file.dart';
+//import 'package:scancer_app/screens/bottomnavbar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -41,13 +44,40 @@ class _HomePageState extends State<HomePage> {
                       )),
                 ),
               ),
-              Row(
-                children: const [],
+           ], 
+                ), 
               ),
-            ],
+            
           ),
-        ),
+        floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _pickFile();
+        },
+        child: Icon(Icons.add_a_photo_outlined,color: Colors.white, size: 29,),
+        backgroundColor: Colors.red,
+        tooltip: 'Capture Picture',
+        elevation: 5,
+        splashColor: Colors.grey,
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+      
+    
   }
 }
+
+
+void _pickFile() async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: true,type: FileType.custom,allowedExtensions: ['jpg','pdf','png','jpeg','webp']);
+    // if no file is picked
+    if (result == null) return;
+    // we get the file from result object
+    final file = result.files.first;
+    viewFile(file);
+  }
+  
+  
+  // open the picked file
+  void viewFile(PlatformFile file) {
+    OpenFile.open(file.path);
+  }
