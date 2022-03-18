@@ -3,6 +3,8 @@ import 'package:scancer_app/screens/homepage.dart';
 import 'package:scancer_app/screens/profile.dart';
 
 class BottomNavBar extends StatelessWidget {
+  const BottomNavBar({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -36,7 +38,7 @@ class BottomNavBar extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => HomePage()),
+                                      builder: (context) => const HomePage()),
                                 );
                               }),
                           IconButton(

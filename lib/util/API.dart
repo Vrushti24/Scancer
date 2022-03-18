@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'package:flutter/services.dart';
+import 'dart:developer';
+import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:scancer_app/util/Result.dart';
+import 'package:scancer_app/util/result.dart';
 
 class API {
   static late String url;
@@ -11,19 +12,37 @@ class API {
     url = response.body;
   }
 
-  static Future<Result> getData() async {
+  static Future<Result?> getData() async {
     await getURL();
-    print(url);
+    log(url);
+    String? file = await pickFile();
+    if (file == null) {
+      log("File Is null");
+      return null;
+    }
+    log(file);
     var request = http.MultipartRequest('POST', Uri.parse(url + '/getText'));
-    var picture = http.MultipartFile.fromBytes('file',
-        (await rootBundle.load('assets/images/cer.jpg')).buffer.asUint8List(),
-        filename: 'testimage.png');
-    request.files.add(picture);
+    request.files.add(await http.MultipartFile.fromPath('file', file));
+    log("File Added");
     var response = await request.send();
+    log("request Sent");
     var responseData = await response.stream.toBytes();
     var jsonResponse = String.fromCharCodes(responseData);
     Result result = Result.fromMap(json.decode(jsonResponse));
-    print(result);
+    log(result.toString());
     return result;
+  }
+
+  static Future<String?> pickFile() async {
+    final result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'pdf', 'png', 'jpeg', 'webp']);
+    // if no file is picked
+    if (result == null) return null;
+    // we get the file from result object
+    PlatformFile file = result.files.first;
+    log(file.name);
+    return file.path;
   }
 }
