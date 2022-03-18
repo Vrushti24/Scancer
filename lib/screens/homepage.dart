@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scancer_app/screens/bottomnavbar.dart';
+import 'package:scancer_app/util/API.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -42,7 +42,14 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Row(
-                children: const [],
+                children: [
+                  ElevatedButton(
+                    onPressed: () async {
+                      await API.getData();
+                    },
+                    child: const Text('Test'),
+                  )
+                ],
               ),
             ],
           ),
