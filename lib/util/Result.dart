@@ -37,12 +37,12 @@ class Result {
 
   Map<String, dynamic> toMap() {
     return {
-      'date': date,
-      'event': event,
-      'official': official,
-      'org': org,
-      'person': person,
-      'toc': toc,
+      'DATE': date,
+      'EVENT': event,
+      'OFFICIAL': official,
+      'ORG': org,
+      'PERSON': person,
+      'TOC': toc,
     };
   }
 
