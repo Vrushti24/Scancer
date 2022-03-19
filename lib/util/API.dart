@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:scancer_app/util/result.dart';
+import 'package:scancer_app/util/Result.dart';
 
 class API {
   static late Result result;
   static late String url;
-  
+
   static Future<void> getURL() async {
     http.Response response =
         await http.get(Uri.parse('http://scancerr.herokuapp.com/getURL'));
@@ -32,6 +32,7 @@ class API {
     var jsonResponse = String.fromCharCodes(responseData);
     result = Result.fromMap(json.decode(jsonResponse));
     log(result.toString());
+    return result;
   }
 
   static Future<String?> pickFile() async {
