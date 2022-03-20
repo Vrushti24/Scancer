@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: must_be_immutable
 
 import 'dart:developer';
 
@@ -22,7 +22,7 @@ class _ListTempleteState extends State<ListTemplete> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
       decoration: BoxDecoration(
         border: Border.all(width: 0.5),
       ),
@@ -36,7 +36,7 @@ class _ListTempleteState extends State<ListTemplete> {
               children: [
                 Text(
                   widget.label,
-                  style: TextStyle(color: Colors.red, fontSize: 16),
+                  style: const TextStyle(color: Colors.red, fontSize: 16),
                 ),
                 IconButton(
                   onPressed: () {
@@ -60,7 +60,7 @@ class _ListTempleteState extends State<ListTemplete> {
                   log(API.result.toString());
                 },
                 initialValue: widget.list[index],
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
                     onPressed: () {
@@ -77,11 +77,10 @@ class _ListTempleteState extends State<ListTemplete> {
                   filled: true,
                   fillColor: Colors.white24,
                   focusColor: Colors.white,
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white, width: 2.0),
                   ),
-                  // labelText: label,
-                  labelStyle: TextStyle(color: Colors.white),
+                  labelStyle: const TextStyle(color: Colors.white),
                 ),
               ),
             ),

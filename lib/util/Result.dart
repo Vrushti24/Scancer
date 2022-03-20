@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
@@ -37,12 +39,12 @@ class Result {
 
   Map<String, dynamic> toMap() {
     return {
-      'DATE': date,
-      'EVENT': event,
-      'OFFICIAL': official,
-      'ORG': org,
-      'PERSON': person,
-      'TOC': toc,
+      'Type Of Certificate': toc,
+      'Name Of Recipient': person,
+      'Event/Topic/Given For': event,
+      'Date': date,
+      'Organization': org,
+      'Signed By (Officials)': official,
     };
   }
 

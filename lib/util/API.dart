@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 import 'dart:developer';
 import 'package:file_picker/file_picker.dart';
@@ -6,25 +8,14 @@ import 'package:scancer_app/util/Result.dart';
 
 class API {
   static late Result result;
-  static late String url;
 
-  static Future<void> getURL() async {
-    http.Response response =
-        await http.get(Uri.parse('http://scancerr.herokuapp.com/getURL'));
-    url = response.body;
-  }
-
-  static Future<Result?> getData() async {
-    await getURL();
+  static Future<Result?> getData(String filepath) async {
+    String url =
+        (await http.get(Uri.parse('http://scancerr.herokuapp.com/getURL')))
+            .body;
     log(url);
-    String? file = await pickFile();
-    if (file == null) {
-      log("File Is null");
-      return null;
-    }
-    log(file);
     var request = http.MultipartRequest('POST', Uri.parse(url + '/getText'));
-    request.files.add(await http.MultipartFile.fromPath('file', file));
+    request.files.add(await http.MultipartFile.fromPath('file', filepath));
     log("File Added");
     var response = await request.send();
     log("request Sent");
@@ -35,9 +26,9 @@ class API {
     return result;
   }
 
-  static Future<String?> pickFile() async {
+  static Future<PlatformFile?> pickFile() async {
     final result = await FilePicker.platform.pickFiles(
-        allowMultiple: true,
+        allowMultiple: false,
         type: FileType.custom,
         allowedExtensions: ['jpg', 'pdf', 'png', 'jpeg', 'webp']);
     // if no file is picked
@@ -45,6 +36,6 @@ class API {
     // we get the file from result object
     PlatformFile file = result.files.first;
     log(file.name);
-    return file.path;
+    return file;
   }
 }
