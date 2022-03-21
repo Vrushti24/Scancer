@@ -10,6 +10,15 @@ class Result {
   List<String> org;
   List<String> person;
   List<String> toc;
+  static List<String> get fields => [
+        'Type Of Certificate',
+        'Name Of Recipient',
+        'Event/Topic/Given For',
+        'Date',
+        'Organization',
+        'Signed By (Officials)'
+      ];
+
   Result({
     required this.date,
     required this.event,
@@ -39,12 +48,12 @@ class Result {
 
   Map<String, dynamic> toMap() {
     return {
-      'Type Of Certificate': toc,
-      'Name Of Recipient': person,
-      'Event/Topic/Given For': event,
-      'Date': date,
-      'Organization': org,
-      'Signed By (Officials)': official,
+      fields[0]: toc.join(';\n'),
+      fields[1]: person.join(';\n'),
+      fields[2]: event.join(';\n'),
+      fields[3]: date.join(';\n'),
+      fields[4]: org.join(';\n'),
+      fields[5]: official.join(';\n'),
     };
   }
 

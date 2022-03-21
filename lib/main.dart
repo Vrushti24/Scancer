@@ -5,10 +5,12 @@ import 'package:scancer_app/screens/homepage.dart';
 import 'package:scancer_app/screens/login.dart';
 import 'package:scancer_app/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:scancer_app/util/scancer_sheet_api.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await ScancerSheetApi.init();
   runApp(const MyApp());
 }
 

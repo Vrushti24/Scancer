@@ -34,8 +34,10 @@ dependencies:
   flutter:
     sdk: flutter
   google_sign_in: ^5.2.4
+  gsheets: ^0.3.2
   http: ^0.13.4
   open_file: ^3.2.1
+  path_provider: ^2.0.9
   provider: ^6.0.2
   splash_screen_view: ^3.0.0
 

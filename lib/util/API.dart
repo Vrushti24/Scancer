@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:scancer_app/util/Result.dart';
 
 class API {
-  static late Result result;
+  static Result? result;
 
   static Future<Result?> getData(String filepath) async {
     String url =

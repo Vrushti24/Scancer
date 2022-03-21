@@ -1,9 +1,11 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:scancer_app/provider/google_signin.dart';
 import 'package:scancer_app/screens/verify_data.dart';
 import 'package:scancer_app/util/API.dart';
-import 'package:scancer_app/util/Result.dart';
+import 'package:scancer_app/util/scancer_sheet_api.dart';
 import 'package:scancer_app/widget/file_view.dart';
 import 'package:scancer_app/widget/get_button.dart';
 
@@ -21,7 +23,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double titleHeight = height * 0.13 >= 40 ? height * 0.13 : 40;
-    // log(API.result.toString());
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -84,10 +85,9 @@ class _HomePageState extends State<HomePage> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     if (file != null)
-                      getButton('Process', process, Icons.upload),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                      getButton('Process', () async {
+                        await process();
+                      }, Icons.upload),
                     getButton(
                       (file == null ? "Select File" : "Change File"),
                       () async {
@@ -95,7 +95,17 @@ class _HomePageState extends State<HomePage> {
                         setState(() {});
                       },
                       Icons.file_open,
-                    )
+                    ),
+                    if (ScancerSheetApi.noOfRowsInserted > 0)
+                      getButton("Download", () async {
+                        if (GoogleSignInProvider.authUser == null) {
+                          await unAuthDownload();
+                        }
+                      }, Icons.download),
+                    if (ScancerSheetApi.noOfRowsInserted > 0)
+                      getButton("View Excel", () async {
+                        await ScancerSheetApi.viewSheet();
+                      }, Icons.remove_red_eye)
                   ],
                 ),
               ],
@@ -120,15 +130,25 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  process() async {
+  Future<void> unAuthDownload() async {
+    File file = await ScancerSheetApi.downloadSheet();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+            'File Saved To ${file.path.replaceAll('/storage/emulated/0/', '')}'),
+      ),
+    );
+  }
+
+  Future<void> process() async {
     try {
       setState(() {
         _isLoading = true;
       });
-      Result? r = await API.getData(file!.path!);
+      API.result = await API.getData(file!.path!);
       log("Data Fetched");
-      if (r != null) {
-        Navigator.push(context,
+      if (API.result != null) {
+        await Navigator.push(context,
             MaterialPageRoute(builder: (context) => const VerifyData()));
       }
       file = null;

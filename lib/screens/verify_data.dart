@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:scancer_app/provider/google_signin.dart';
 import 'package:scancer_app/util/API.dart';
+import 'package:scancer_app/util/scancer_sheet_api.dart';
 import 'package:scancer_app/widget/list_template.dart';
 
 class VerifyData extends StatefulWidget {
@@ -22,8 +24,6 @@ class _VerifyDataState extends State<VerifyData> {
 
   @override
   Widget build(BuildContext context) {
-    //  double height = MediaQuery.of(context).size.height;
-    // Map<String, dynamic> res = API.result.toMap();
     return Scaffold(
       appBar: AppBar(
           title: Text(
@@ -42,16 +42,17 @@ class _VerifyDataState extends State<VerifyData> {
                     shrinkWrap: true,
                     children: [
                       ListTemplete(
-                          list: API.result.toc, label: 'Type Of Certificate'),
+                          list: API.result!.toc, label: 'Type Of Certificate'),
                       ListTemplete(
-                          list: API.result.person, label: 'Name Of Recipient'),
+                          list: API.result!.person, label: 'Name Of Recipient'),
                       ListTemplete(
-                          list: API.result.event,
+                          list: API.result!.event,
                           label: 'Event/Topic/Given For'),
-                      ListTemplete(list: API.result.date, label: 'Date'),
-                      ListTemplete(list: API.result.org, label: 'Organization'),
+                      ListTemplete(list: API.result!.date, label: 'Date'),
                       ListTemplete(
-                          list: API.result.official,
+                          list: API.result!.org, label: 'Organization'),
+                      ListTemplete(
+                          list: API.result!.official,
                           label: 'Signed By (Officials)'),
                       SizedBox(
                         height: 80,
@@ -73,7 +74,11 @@ class _VerifyDataState extends State<VerifyData> {
                 child: InkWell(
                   splashColor: Colors.green,
                   onTap: () {
+                    if (GoogleSignInProvider.authUser == null) {
+                      ScancerSheetApi.saveResult(API.result!);
+                    }
                     Navigator.pop(context);
+                    API.result = null;
                   },
                   borderRadius: BorderRadius.circular(30.0),
                   child: Row(

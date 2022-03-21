@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleSignInProvider extends ChangeNotifier {
+  static User? authUser;
   BuildContext context;
   GoogleSignInProvider(
     this.context,
@@ -24,5 +25,6 @@ class GoogleSignInProvider extends ChangeNotifier {
       notifyListeners();
       Navigator.pushReplacementNamed(context, '/homepage');
     }
+    authUser = FirebaseAuth.instance.currentUser;
   }
 }

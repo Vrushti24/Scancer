@@ -7,7 +7,9 @@ ElevatedButton getButton(String lable, Function()? fun, IconData icon) {
       icon,
       size: 22,
     ),
-    label: Padding(
+    label: Container(
+      width: 120,
+      alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       child: Text(
         lable,
