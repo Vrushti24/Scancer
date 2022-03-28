@@ -1,17 +1,16 @@
 import 'dart:developer';
-import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:scancer_app/provider/google_signin.dart';
 import 'package:scancer_app/screens/verify_data.dart';
 import 'package:scancer_app/util/API.dart';
-import 'package:scancer_app/util/scancer_sheet_api.dart';
+import 'package:scancer_app/util/sheet.dart';
 import 'package:scancer_app/widget/file_view.dart';
 import 'package:scancer_app/widget/get_button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
-
+  static showSnackBar(String msg) {}
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -85,9 +84,13 @@ class _HomePageState extends State<HomePage> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     if (file != null)
-                      getButton('Process', () async {
-                        await process();
-                      }, Icons.upload),
+                      getButton(
+                        'Process',
+                        () async {
+                          await process();
+                        },
+                        Icons.upload,
+                      ),
                     getButton(
                       (file == null ? "Select File" : "Change File"),
                       () async {
@@ -96,16 +99,21 @@ class _HomePageState extends State<HomePage> {
                       },
                       Icons.file_open,
                     ),
-                    if (ScancerSheetApi.noOfRowsInserted > 0)
-                      getButton("Download", () async {
-                        if (GoogleSignInProvider.authUser == null) {
-                          await unAuthDownload();
-                        }
-                      }, Icons.download),
-                    if (ScancerSheetApi.noOfRowsInserted > 0)
-                      getButton("View Excel", () async {
-                        await ScancerSheetApi.viewSheet();
-                      }, Icons.remove_red_eye)
+                    getButton(
+                      Sheet.isLocalUser ? "Save & View" : "View",
+                      () async {
+                        await Sheet.saveSheet();
+                      },
+                      Sheet.isLocalUser ? Icons.save : Icons.remove_red_eye,
+                    ),
+                    getButton(
+                      "Logout",
+                      () {
+                        GoogleSignInProvider.googleSignIn.disconnect();
+                        GoogleSignInProvider.googleSignIn.signOut();
+                      },
+                      Icons.logout,
+                    ),
                   ],
                 ),
               ],
@@ -126,16 +134,6 @@ class _HomePageState extends State<HomePage> {
               ),
           ],
         ),
-      ),
-    );
-  }
-
-  Future<void> unAuthDownload() async {
-    File file = await ScancerSheetApi.downloadSheet();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-            'File Saved To ${file.path.replaceAll('/storage/emulated/0/', '')}'),
       ),
     );
   }

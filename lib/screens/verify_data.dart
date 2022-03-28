@@ -1,9 +1,6 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:scancer_app/provider/google_signin.dart';
 import 'package:scancer_app/util/API.dart';
-import 'package:scancer_app/util/scancer_sheet_api.dart';
+import 'package:scancer_app/util/sheet.dart';
 import 'package:scancer_app/widget/list_template.dart';
 
 class VerifyData extends StatefulWidget {
@@ -26,7 +23,7 @@ class _VerifyDataState extends State<VerifyData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(
+          title: const Text(
         "Verify",
         style: TextStyle(fontSize: 20),
       )),
@@ -54,7 +51,7 @@ class _VerifyDataState extends State<VerifyData> {
                       ListTemplete(
                           list: API.result!.official,
                           label: 'Signed By (Officials)'),
-                      SizedBox(
+                      const SizedBox(
                         height: 80,
                       )
                     ],
@@ -65,7 +62,7 @@ class _VerifyDataState extends State<VerifyData> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                margin: EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 height: 60,
                 decoration: BoxDecoration(
                   color: Colors.primaries.first,
@@ -74,9 +71,7 @@ class _VerifyDataState extends State<VerifyData> {
                 child: InkWell(
                   splashColor: Colors.green,
                   onTap: () {
-                    if (GoogleSignInProvider.authUser == null) {
-                      ScancerSheetApi.saveResult(API.result!);
-                    }
+                    Sheet.appendData(API.result!.toList());
                     Navigator.pop(context);
                     API.result = null;
                   },

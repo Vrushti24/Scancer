@@ -48,13 +48,24 @@ class Result {
 
   Map<String, dynamic> toMap() {
     return {
-      fields[0]: toc.join(';\n'),
-      fields[1]: person.join(';\n'),
-      fields[2]: event.join(';\n'),
-      fields[3]: date.join(';\n'),
-      fields[4]: org.join(';\n'),
-      fields[5]: official.join(';\n'),
+      fields[0]: toc.join(';;\n'),
+      fields[1]: person.join(';;\n'),
+      fields[2]: event.join(';;\n'),
+      fields[3]: date.join(';;\n'),
+      fields[4]: org.join(';;\n'),
+      fields[5]: official.join(';;\n'),
     };
+  }
+
+  List<String> toList() {
+    return [
+      toc.join(';;\n'),
+      person.join(';;\n'),
+      event.join(';;\n'),
+      date.join(';;\n'),
+      org.join(';;\n'),
+      official.join(';;\n')
+    ];
   }
 
   factory Result.fromMap(Map<String, dynamic> map) {

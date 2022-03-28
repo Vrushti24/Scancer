@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scancer_app/provider/google_signin.dart';
+import 'package:scancer_app/util/sheet.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -124,6 +125,8 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 onTap: () async {
+                  Sheet.isLocalUser = true;
+                  Sheet.init();
                   Navigator.pushReplacementNamed(context, '/homepage');
                 },
               ),
