@@ -1,13 +1,17 @@
 import 'dart:developer';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:googleapis/sheets/v4.dart' as gsa;
 import 'package:scancer_app/provider/google_signin.dart';
 import 'package:scancer_app/util/Result.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GoogleSheet {
-  static late String id = '1B86HWYKTRgyPgEhXZxFyg6S90_pFSjBdSz_nY_nokjc';
+  static late String?id = null;
   static late Client client;
   static late gsa.SheetsApi api;
 
@@ -16,6 +20,8 @@ class GoogleSheet {
       gsa.Spreadsheet sheet = gsa.Spreadsheet(
           properties: gsa.SpreadsheetProperties(title: 'Scancer'));
       sheet = await api.spreadsheets.create(sheet);
+      print('=================================================');
+      print(sheet.spreadsheetId);
       gsa.ValueRange vr = gsa.ValueRange.fromJson({
         'values': [Result.fields]
       });
@@ -35,7 +41,7 @@ class GoogleSheet {
     });
     try {
       await api.spreadsheets.values
-          .append(vr, id, 'A:F', valueInputOption: 'USER_ENTERED');
+          .append(vr, id!, 'A:F', valueInputOption: 'USER_ENTERED');
       return true;
     } catch (e) {
       return false;
@@ -49,18 +55,33 @@ class GoogleSheet {
       api = gsa.SheetsApi(client);
     }
     try {
-      await api.spreadsheets.get(id);
-    } catch (e) {
-      gsa.DetailedApiRequestError er = e as gsa.DetailedApiRequestError;
-      if (er.status != null && (er.status == 403 || er.status == 404)) {
+      final doc = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.email).get();
+      id=doc.get('id');
+      print(id);
+      await api.spreadsheets.get(id!);
+    } on PlatformException catch(e)  {
+      print(e);
         String? sid = await createSpreadsheet();
-        if (sid != null) id = sid;
-      }
+        if (sid != null) {
+          id = sid;
+          await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.email).set({'id':sid});
+        }
+    }
+    
+    catch (e) {
+      //gsa.DetailedApiRequestError er = e as gsa.DetailedApiRequestError;
+      //if (er.status != null && (er.status == 403 || er.status == 404)) {
+        String? sid = await createSpreadsheet();
+        if (sid != null) {
+          id = sid;
+          await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.email).set({'id':sid});
+        }
+      
     }
   }
 
   static Future viewSheet() async {
-    gsa.Spreadsheet sheet = await api.spreadsheets.get(id);
+    gsa.Spreadsheet sheet = await api.spreadsheets.get(id!);
     if (sheet.spreadsheetUrl != null) {
       launch(sheet.spreadsheetUrl!);
     }
