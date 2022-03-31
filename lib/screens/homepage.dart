@@ -106,14 +106,6 @@ class _HomePageState extends State<HomePage> {
                       },
                       Sheet.isLocalUser ? Icons.save : Icons.remove_red_eye,
                     ),
-                    getButton(
-                      "Logout",
-                      () {
-                        GoogleSignInProvider.googleSignIn.disconnect();
-                        GoogleSignInProvider.googleSignIn.signOut();
-                      },
-                      Icons.logout,
-                    ),
                   ],
                 ),
               ],
