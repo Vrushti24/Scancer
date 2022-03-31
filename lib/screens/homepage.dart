@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:scancer_app/provider/google_signin.dart';
 import 'package:scancer_app/screens/verify_data.dart';
 import 'package:scancer_app/util/API.dart';
 import 'package:scancer_app/util/sheet.dart';
