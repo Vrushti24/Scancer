@@ -2,7 +2,7 @@
     package="com.example.scancer_app">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> 
     <application
-        android:label="scancer_app"
+        android:label="ScanCer"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
